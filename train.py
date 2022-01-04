@@ -44,6 +44,11 @@ def time_string():
 
 
 def train(log_dir, args):
+  print(args.input)
+  print("####################")
+  print(hparams)
+  print("####################")
+  
   commit = get_git_commit() if args.git else 'None'
   checkpoint_path = os.path.join(log_dir, 'model.ckpt')
   input_path = os.path.join(args.base_dir, args.input)
@@ -56,6 +61,9 @@ def train(log_dir, args):
   coord = tf.train.Coordinator()
   with tf.variable_scope('datafeeder') as scope:
     feeder = DataFeeder(coord, input_path, hparams)
+
+#   with tf.compat.v1.variable_scope('datafeeder') as scope:
+#     feeder = DataFeeder(coord, input_path, hparams)
 
   # Set up model:
   global_step = tf.Variable(0, name='global_step', trainable=False)
@@ -95,17 +103,17 @@ def train(log_dir, args):
         loss_window.append(loss)
         message = 'Step %-7d [%.03f sec/step, loss=%.05f, avg_loss=%.05f]' % (
           step, time_window.average, loss, loss_window.average)
-        log(message, slack=(step % args.checkpoint_interval == 0))
+        log(message, slack=(step % hparams.checkpoint_interval == 0))
 
         if loss > 100 or math.isnan(loss):
           log('Loss exploded to %.05f at step %d!' % (loss, step), slack=True)
           raise Exception('Loss Exploded')
 
-        if step % args.summary_interval == 0:
+        if step % hparams.summary_interval == 0:
           log('Writing summary at step: %d' % step)
           summary_writer.add_summary(sess.run(stats), step)
 
-        if step % args.checkpoint_interval == 0:
+        if step % hparams.checkpoint_interval == 0:
           log('Saving checkpoint to: %s-%d' % (checkpoint_path, step))
           saver.save(sess, checkpoint_path, global_step=step)
           log('Saving audio and alignment...')
@@ -132,10 +140,10 @@ def main():
   parser.add_argument('--hparams', default='',
     help='Hyperparameter overrides as a comma-separated list of name=value pairs')
   parser.add_argument('--restore_step', type=int, help='Global step to restore from checkpoint.')
-  parser.add_argument('--summary_interval', type=int, default=100,
-    help='Steps between running summary ops.')
-  parser.add_argument('--checkpoint_interval', type=int, default=1000,
-    help='Steps between writing checkpoints.')
+#   parser.add_argument('--summary_interval', type=int, default=10,
+#     help='Steps between running summary ops.')
+#   parser.add_argument('--checkpoint_interval', type=int, default=20,
+#     help='Steps between writing checkpoints.')
   parser.add_argument('--slack_url', help='Slack webhook URL to get periodic reports.')
   parser.add_argument('--tf_log_level', type=int, default=1, help='Tensorflow C++ log level.')
   parser.add_argument('--git', action='store_true', help='If set, verify that the client is clean.')

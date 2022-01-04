@@ -29,13 +29,15 @@ hparams = tf.contrib.training.HParams(
 
 
   # Training:
-  batch_size=32,
+  batch_size=16,
   adam_beta1=0.9,
   adam_beta2=0.999,
   initial_learning_rate=0.002,
   decay_learning_rate=True,
   use_cmudict=False,  # Use CMUDict during training to learn pronunciation of ARPAbet phonemes
-
+  checkpoint_interval=20,
+  summary_interval=10,
+  
   # Eval:
   max_iters=1000,
   griffin_lim_iters=60,
@@ -43,7 +45,7 @@ hparams = tf.contrib.training.HParams(
 
   #Global style token
   use_gst=True,     # When false, the scripit will do as the paper  "Towards End-to-End Prosody Transfer for Expressive Speech Synthesis with Tacotron"
-  num_gst=10,
+  num_gst=128,
   num_heads=4,       # Head number for multi-head attention
   style_embed_depth=256,
   reference_filters=[32, 32, 64, 64, 128, 128],
