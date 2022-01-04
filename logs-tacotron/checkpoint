@@ -1,2 +1,0 @@
-model_checkpoint_path: "/content/drive/My Drive/Projects/TTS/multi speaker/GST_Tacotron/gst-tacotron/logs-tacotron/model.ckpt-20"
-all_model_checkpoint_paths: "/content/drive/My Drive/Projects/TTS/multi speaker/GST_Tacotron/gst-tacotron/logs-tacotron/model.ckpt-20"

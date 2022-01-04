@@ -50,7 +50,7 @@ def train(log_dir, args):
   print("####################")
   
   commit = get_git_commit() if args.git else 'None'
-  checkpoint_path = os.path.join(log_dir, 'model.ckpt')
+  checkpoint_path = os.path.join(log_dir, 'checkpoints/model.ckpt')
   input_path = os.path.join(args.base_dir, args.input)
   log('Checkpoint path: %s' % checkpoint_path)
   log('Loading training data from: %s' % input_path)
@@ -120,8 +120,8 @@ def train(log_dir, args):
           input_seq, spectrogram, alignment = sess.run([
             model.inputs[0], model.linear_outputs[0], model.alignments[0]])
           waveform = audio.inv_spectrogram(spectrogram.T)
-          audio.save_wav(waveform, os.path.join(log_dir, 'step-%d-audio.wav' % step))
-          plot.plot_alignment(alignment, os.path.join(log_dir, 'step-%d-align.png' % step),
+          audio.save_wav(waveform, os.path.join(log_dir, 'audios/step-%d-audio.wav' % step))
+          plot.plot_alignment(alignment, os.path.join(log_dir, 'alignments/step-%d-align.png' % step),
             info='%s, %s, %s, step=%d, loss=%.5f' % (args.model, commit, time_string(), step, loss))
           log('Input: %s' % sequence_to_text(input_seq))
 
