@@ -1,5 +1,0 @@
-model_checkpoint_path: "/content/drive/My Drive/Projects/TTS/multi speaker/GST_Tacotron/gst-tacotron/logs-tacotron/checkpoints/model.ckpt-16"
-all_model_checkpoint_paths: "/content/drive/My Drive/Projects/TTS/multi speaker/GST_Tacotron/gst-tacotron/logs-tacotron/checkpoints/model.ckpt-4"
-all_model_checkpoint_paths: "/content/drive/My Drive/Projects/TTS/multi speaker/GST_Tacotron/gst-tacotron/logs-tacotron/checkpoints/model.ckpt-8"
-all_model_checkpoint_paths: "/content/drive/My Drive/Projects/TTS/multi speaker/GST_Tacotron/gst-tacotron/logs-tacotron/checkpoints/model.ckpt-12"
-all_model_checkpoint_paths: "/content/drive/My Drive/Projects/TTS/multi speaker/GST_Tacotron/gst-tacotron/logs-tacotron/checkpoints/model.ckpt-16"
